@@ -1,5 +1,7 @@
 # small3dlib
 
+**[Original code by Miloslav Číž (drummyfish) check here](https://codeberg.org/drummyfish/small3dlib)**
+
 Public domain 3D software rasterizer for (not only) resource-limited computers.
 
 If you like this, you may also like my similar project: [raycastlib](https://gitlab.com/drummyfish/raycastlib). These two libraries can very easily be combined together -- here is a proof-of-concept gif (environment rendered with raycastlib, cubes with small3dlib):
