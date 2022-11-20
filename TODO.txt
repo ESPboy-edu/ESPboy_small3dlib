@@ -1,0 +1,106 @@
+features:
+
+- Replace assets with completely original ones, rerender images/animations.
+
+- Add optional functions (macro defs.) that get called during various rendering
+  steps, to e.g. be able to analyze and visualize rendering step by step.
+  
+- Benchmarking in test.c.
+
+- Test on big endien.
+
+- Optional OpenGL acceleration, perhaps a separate header file with the same
+  API. How this can work:
+
+  Have a new accelerated render scene function that in the first pass uses OGL
+  to render info about pixels (barycentric, depth, ...) to a 2D "screen" array
+  (g buffer), then in the second pass loop over these pixels and on each
+  rendered pixel call the user pixel funct. Basically deferred rendering in
+  which the first pass is done with OGL.
+
+- Helper functions for e.g. retrieving and caching UV coords etc. Maybe these
+  should be in a separate file?                            DONE
+
+- objtool: An option to parse material groups and generate an array of 
+  per-triangle material indices.                           DONE
+
+- PC == 2 (and possibly 1) could likely be accelerated by not using interpolate
+  functions, but rather FastLerStates for the values recomputed after each
+  row segment.                                             DONE (doesn't work
+                                                                 for PC == 2,
+                                                                 tried)
+- function for computing normals and lighting
+
+- triangle sorting:
+  - back-to-front (slower, better memory efficiency)       DONE
+  - front-to-back (faster, but needs 1bit stencil buffer)  DONE
+
+- function to set/clear stencil buffer -- can be useful
+
+- function to map one point in 3D space to screen, along with size (for mapping
+  billboards/sprites etc.)                                 DONE
+
+- Optimize persp. correction!
+
+- Create and use the same function for determining CW/CCW AND left/right vertex
+  determination in triangle drawing.                       DONE
+
+- Check (and possibly fix) if any barycentric coord ever exceeds the range
+  <0,255> due to rounding errors etc.                      DONE
+
+- dithered barycentric interpolation function that is faster than normal
+  interpolation -- it will randomly picky one of three values, with greater
+  probabilities at greater coords
+
+- option to disable baycentric coordinates computing       DONE
+
+- Z-buffer:
+  - full                                  DONE
+  - reduced (resolution and precision)    DONE
+  - more reduced (4-bit)
+
+- MipMapping? Add triangle size to pixelInfo.  DONE
+
+- perspective correction modes:
+  - none                                    DONE
+  - full                                    DONE
+  - approximate                             DONE
+
+- predefined 3D shapes:
+  - cube                                    DONE
+  - sphere
+  - cylinder
+  - pyramid
+  - plane
+
+- Depth computation during rasterization -- this should be an optional thing,
+  specified with a define (S3L_COMPUTE_DEPTH), which may be turned on
+  automatically for some modes (e.g. Z-buffer). It should be computed by the
+  fast lerp and passed in the PixelInfo struct.    DONE
+
+- Python tool to convert obj to C array            DONE
+
+- Python tool to convert texture images to C array DONE
+
+- create demos:
+  - model viewer                                   DONE 
+  - game-like demo (GTA-style, Quake style etc.)   DONE
+  - offline HQ (lerp texuring, normal mapping, reflections, ...) rendering
+    to PPM image file                              DONE
+  - test offline rendering of a high-poly model (see how very small tris
+    are rendered)
+
+- drawModel: create an option that would use a cache to not transform the same
+  point twice                                      DONE (doesn't work, tried)
+
+- Optional rendering stats (FPS, rendered triangles, ...).
+
+- profiling functions for optimization
+
+bugs:
+
+repeated:
+
+- valgrind (and similar) checks
+- optimize
+- write tests/benchmarks
